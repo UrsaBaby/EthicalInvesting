@@ -64,9 +64,14 @@ public class EthicalInvesting {
         ///
         ///
         testPerson.addQuestionableIndustryPreference(thisPreference);
-        System.out.println(testPerson.getQuestionableIndustryPreferenceWithThisName(thisPreference.getIndustryName()).getPreferenceValue());
+        System.out.println(testPerson.getQuestionableIndustryPreferenceWithThisName(thisPreference.getIndustryName()));
         Calculations calculator = new Calculations();
-
+        ///
+        ///
+        ///
+        System.out.println("---");
+        newETF.addClimatePositiveExposure(newCPE);
+        System.out.println(newETF.getClimatePositiveExposureWithThisName("PositivExponeringTest"));
     }
 
 }

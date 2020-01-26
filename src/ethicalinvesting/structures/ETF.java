@@ -29,10 +29,10 @@ public class ETF {
         importDataReader = new ImportDataReader();
         thisQuestionableIndustriesExposures = new ArrayList<QuestionableIndustryExposure>();
         thisClimatePositiveExposures = new ArrayList<ClimatePositiveExposure>();
-        addClimatePostiveExposuresToThisListWithTheseNames(thisClimatePositiveExposures, importDataReader.getClimatePositiveExposureForETF());
-        addQuestionableIndustryExposureToThisListWithTheseNames(thisQuestionableIndustriesExposures, importDataReader.getClimateQuestionableIndustriesNames());
-        setClimatePositiveExposureThisList(thisClimatePositiveExposures);
-        setQuestionableIndustryExposureOnThisList(thisQuestionableIndustriesExposures);
+      //  addClimatePostiveExposuresToThisListWithTheseNames(thisClimatePositiveExposures, importDataReader.getClimatePositiveExposureForETF());
+    //    addQuestionableIndustryExposureToThisListWithTheseNames(thisQuestionableIndustriesExposures, importDataReader.getClimateQuestionableIndustriesNames()); Should not be here
+       // setClimatePositiveExposureOnThisList(thisClimatePositiveExposures);
+    //    setQuestionableIndustryExposureOnThisList(thisQuestionableIndustriesExposures); Should not be here
     }
 
     public void setSustainabilityScore(float score) {
@@ -59,7 +59,7 @@ public class ETF {
         }
     }
 
-    private void setClimatePositiveExposureThisList(ArrayList<ClimatePositiveExposure> thisList) {
+    private void setClimatePositiveExposureOnThisList(ArrayList<ClimatePositiveExposure> thisList) {
         for (ClimatePositiveExposure checker : thisList) {
             checker.setExposure(importDataReader.getClimatePositiveExposureForExposureWithThisNameForETFWithThisName(checker.getName(), this.getName()));
         }
@@ -122,6 +122,32 @@ public class ETF {
         System.out.println("Error in ETF getQuestionableIndustryExposureForThisETFWithThisName");
     return new QuestionableIndustryExposure();
 
+    }
+    
+    public void addQuestionableIndustryExposure(QuestionableIndustryExposure thisQuestionableIndustry){
+        thisQuestionableIndustriesExposures.add(thisQuestionableIndustry);
+    }
+    
+    public void setQuestionableIndustryWithThisNameToThisExposureValue(String questionableIndustryExposureName, float value){
+        for(QuestionableIndustryExposure checker : thisQuestionableIndustriesExposures){
+            if(checker.getIndustryExposureName().equals(questionableIndustryExposureName)){
+                checker.setExposure(value);
+            }
+        }
+    }
+    
+    public void addClimatePositiveExposure(ClimatePositiveExposure thisClimatePositiveExposure){
+        thisClimatePositiveExposures.add(thisClimatePositiveExposure);
+    }
+    
+    public ClimatePositiveExposure getClimatePositiveExposureWithThisName(String climatePositiveExposureName){
+        for(ClimatePositiveExposure checker : thisClimatePositiveExposures){
+            if(checker.getName().equals(climatePositiveExposureName)){
+                return checker;
+            }
+        }
+        System.out.println("Error in ETF getClimatePositiveExposureWithThisName, climate positive exposure not found");
+        return new ClimatePositiveExposure();
     }
 
 }
