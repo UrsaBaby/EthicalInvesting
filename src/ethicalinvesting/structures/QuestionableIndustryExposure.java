@@ -26,16 +26,16 @@ public class QuestionableIndustryExposure {
         this.exposure = exposure;
     }
     
-    public String getIndustryName(){
+    public String getIndustryExposureName(){
         return this.name;
     }
     
-    public float getExposure(){
+    public float getExposureValue(){
         return exposure;
     }
     
     public String toString(){
-        return "Industry: " + this.getIndustryName() + ", Exposure: " + this.getExposure() + "%";
+        return "Industry: " + this.getIndustryExposureName() + ", Exposure: " + this.getExposureValue() + "%";
     }
     
     

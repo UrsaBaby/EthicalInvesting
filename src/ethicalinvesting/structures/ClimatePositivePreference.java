@@ -10,5 +10,28 @@ package ethicalinvesting.structures;
  * @author Peter
  */
 public class ClimatePositivePreference {
+    private String climatePositiveExpoureName;
+    private float climatePositiveExposureValue;
+    
+    public void setClimatePositiveExposureName(String exposureName){
+        this.climatePositiveExpoureName = exposureName;
+    }
+    
+    public void setClimatePositiveExposureValue(float exposureValue){
+        this.climatePositiveExposureValue = exposureValue;
+    }
+    
+    public String getClmatePositiveExposureName(){
+        return this.climatePositiveExpoureName;
+    }
+    
+    public float getClimatePositiveExposureValue(){
+        return this.climatePositiveExposureValue;
+    }
+    
+    public String toString(){
+        return this.getClmatePositiveExposureName() + " " + this.getClimatePositiveExposureValue() + "%";
+    }
+    
     
 }

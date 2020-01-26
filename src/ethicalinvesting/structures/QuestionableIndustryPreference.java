@@ -10,6 +10,26 @@ package ethicalinvesting.structures;
  * @author Peter
  */
 public class QuestionableIndustryPreference {
+    private float preferenceValue;
+    private String industry;
     
+    public void setIndustry(String industry){
+        this.industry = industry;
+    }
     
+    public void setPreferenceValue(float preferenceValue){
+        this.preferenceValue = preferenceValue;
+    }
+    
+    public String getIndustryName(){
+        return this.industry;
+    }
+    
+    public float getPreferenceValue(){
+        return this.preferenceValue;
+    }
+    
+    public String toString(){
+        return this.getIndustryName() + " " + this.getPreferenceValue() + "%";
+    }
 }

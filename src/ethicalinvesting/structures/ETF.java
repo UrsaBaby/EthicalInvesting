@@ -67,7 +67,7 @@ public class ETF {
 
     private void setQuestionableIndustryExposureOnThisList(ArrayList<QuestionableIndustryExposure> thisList) {
         for (QuestionableIndustryExposure checker : thisList) {
-            checker.setExposure(importDataReader.getQuestionableIndustryExposureForExposureWithThisNameForETFWithThisName(checker.getIndustryName(), this.getName()));
+            checker.setExposure(importDataReader.getQuestionableIndustryExposureForExposureWithThisNameForETFWithThisName(checker.getIndustryExposureName(), this.getName()));
         }
     }
 
@@ -98,18 +98,30 @@ public class ETF {
     public String getStringRepForQuestionableIndustryExposures() {
         String returnString = "";
         for (QuestionableIndustryExposure checker : thisQuestionableIndustriesExposures) {
-            returnString += "\n" + checker.getIndustryName() + " " + checker.getExposure() + "%";
+            returnString += "\n" + checker.getIndustryExposureName() + " " + checker.getExposureValue() + "%";
         }
         return returnString;
     }
 
     public String toString() {
-        String returnString = this.getName() + ". Fondinfo: " + this.getIndustry() + ", Hållbarhetspoäng: " + this.getSustainabilityScore();
-        returnString += "\n" + "\n" +  "Klimatpositiv exponering:";
+        String returnString = "Fondnamn: " + this.getName() + "\n" + "Fondinfo: " + this.getIndustry() + "\n" + "Hållbarhetspoäng: " + this.getSustainabilityScore();
+        returnString += "\n" + "\n" + "Klimatpositiv exponering:";
         returnString += this.getStringRepForClimatePositiveExposures();
         returnString += "\n" + "\n" + "Exponering mot ifrågasatta branscher:";
         returnString += this.getStringRepForQuestionableIndustryExposures();
         return returnString;
+    }
+
+    public QuestionableIndustryExposure getQuestionableIndustryExposureForThisETFWithThisName(String IndustryExposureName) {
+      
+            for (QuestionableIndustryExposure checker : thisQuestionableIndustriesExposures) {
+                if (checker.getIndustryExposureName().equals(IndustryExposureName)) {
+                    return checker;
+                }
+            }
+        System.out.println("Error in ETF getQuestionableIndustryExposureForThisETFWithThisName");
+    return new QuestionableIndustryExposure();
+
     }
 
 }
