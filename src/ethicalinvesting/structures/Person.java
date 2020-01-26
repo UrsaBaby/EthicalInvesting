@@ -6,6 +6,7 @@
 package ethicalinvesting.structures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,10 +17,14 @@ public class Person {
 
     private String name;
     private String mail;
-    private ArrayList<QuestionableIndustryPreference> personsQuestionableIndustryPreferences;
+    private ArrayList<QuestionableIndustryPreference> thisQuestionableIndustryPreferences;
+    private ArrayList<ClimatePositivePreference> thisClimatePositivePreferences;
+    private HashMap<ETF, Float> myETFScores;
 
     public Person() {
-        personsQuestionableIndustryPreferences = new ArrayList<QuestionableIndustryPreference>();
+        thisQuestionableIndustryPreferences = new ArrayList<QuestionableIndustryPreference>();
+        myETFScores = new HashMap<ETF, Float>();
+        thisClimatePositivePreferences = new ArrayList<ClimatePositivePreference>();
     }
 
     public void setName(String name) {
@@ -39,30 +44,55 @@ public class Person {
     }
 
     public List<QuestionableIndustryPreference> getQuestionableIndustryPreferences() {
-        return personsQuestionableIndustryPreferences;
+        return thisQuestionableIndustryPreferences;
     }
 
     public String getStringRepForIndustryPreferences() {
         String returnString = "";
-        if (!personsQuestionableIndustryPreferences.isEmpty()) {
-            for (QuestionableIndustryPreference checker : personsQuestionableIndustryPreferences) {
+        if (!thisQuestionableIndustryPreferences.isEmpty()) {
+            for (QuestionableIndustryPreference checker : thisQuestionableIndustryPreferences) {
                 returnString += "\n" + checker.toString();
             }
         }
         else{
-            returnString += "\n"+ "No preferences added";
+            returnString += "\n"+ "Inga preferense satta";
         }
         return returnString;
     }
 
     public void addQuestionableIndustryPreference(QuestionableIndustryPreference addThisPreference) {
-        personsQuestionableIndustryPreferences.add(addThisPreference);
+        thisQuestionableIndustryPreferences.add(addThisPreference);
     }
 
     public String toString() {
-        String returnString = "Name: "+ this.getName() + ", Mail: " + this.getMail();
-         returnString += "\n" + "Industry preferences:";   
+        String returnString = "Namn: "+ this.getName() + "\n" + "Mail: " + this.getMail();
+         returnString += "\n" + "Tvivelaktiga industripreferenser:";   
          returnString += getStringRepForIndustryPreferences();               
         return returnString;
     }
+    
+    public void setMyETFScores(HashMap<ETF, Float> theseScore){
+        myETFScores = theseScore;
+    }
+    
+    public QuestionableIndustryPreference getQuestionableIndustryPreferenceWithThisName(String nameOfIndutryExposure){
+          for(QuestionableIndustryPreference checker : this.getQuestionableIndustryPreferences()){
+            if(checker.getIndustryName().equals(nameOfIndutryExposure)){
+                return checker;
+            }
+        }
+          System.out.println("Error in Person getQuestionableIndutryPreferenceWithThisName");
+          return new QuestionableIndustryPreference();
+    }
+    
+    public ClimatePositivePreference getClimatePositivePreferenceWithThisName(String nameOfClimatePositivePreference){
+        for(ClimatePositivePreference checker : thisClimatePositivePreferences){
+            if(checker.getClmatePositiveExposureName().equals(nameOfClimatePositivePreference)){
+                return checker;
+            }
+        }
+        System.out.println("Error in Person getClimatePositivePreferenceWithThisName");
+        return new ClimatePositivePreference();
+    }
+
 }
