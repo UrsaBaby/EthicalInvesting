@@ -149,5 +149,7 @@ public class ETF {
         System.out.println("Error in ETF getClimatePositiveExposureWithThisName, climate positive exposure not found");
         return new ClimatePositiveExposure();
     }
+    
+    //TODO boolean isContainingCPEWithTHisName(String name)
 
 }

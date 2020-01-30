@@ -18,13 +18,13 @@ public class Person {
     private String name;
     private String mail;
     private ArrayList<QuestionableIndustryPreference> thisQuestionableIndustryPreferences;
-    private ArrayList<ClimatePositivePreference> thisClimatePositivePreferences;
+    private ArrayList<ClimatePositiveExposurePreference> thisClimatePositivePreferences;
     private HashMap<ETF, Float> myETFScores;
 
     public Person() {
         thisQuestionableIndustryPreferences = new ArrayList<QuestionableIndustryPreference>();
         myETFScores = new HashMap<ETF, Float>();
-        thisClimatePositivePreferences = new ArrayList<ClimatePositivePreference>();
+        thisClimatePositivePreferences = new ArrayList<ClimatePositiveExposurePreference>();
     }
 
     public void setName(String name) {
@@ -43,7 +43,7 @@ public class Person {
         return this.mail;
     }
 
-    public List<QuestionableIndustryPreference> getQuestionableIndustryPreferences() {
+    public ArrayList<QuestionableIndustryPreference> getQuestionableIndustryPreferences() {
         return thisQuestionableIndustryPreferences;
     }
 
@@ -85,14 +85,36 @@ public class Person {
           return new QuestionableIndustryPreference();
     }
     
-    public ClimatePositivePreference getClimatePositivePreferenceWithThisName(String nameOfClimatePositivePreference){
-        for(ClimatePositivePreference checker : thisClimatePositivePreferences){
+    public ClimatePositiveExposurePreference getClimatePositivePreferenceWithThisName(String nameOfClimatePositivePreference){
+        for(ClimatePositiveExposurePreference checker : thisClimatePositivePreferences){
             if(checker.getClmatePositiveExposureName().equals(nameOfClimatePositivePreference)){
                 return checker;
             }
         }
         System.out.println("Error in Person getClimatePositivePreferenceWithThisName");
-        return new ClimatePositivePreference();
+        return new ClimatePositiveExposurePreference();
+    }
+    
+    public ArrayList<ClimatePositiveExposurePreference> getClimatePositivePreferences(){
+        return thisClimatePositivePreferences;
+    }
+    
+    public boolean isContainingACPEWithThisName(String name){
+        for(ClimatePositiveExposurePreference checker : getClimatePositivePreferences()){
+            if(checker.getClmatePositiveExposureName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isContatiningACPEPreferenceWithThisName(String name){
+        for(ClimatePositiveExposurePreference checker : this.getClimatePositivePreferences()){
+            if(checker.getClmatePositiveExposureName().equals(name)){
+                return true;
+            }           
+        }
+        return false;
     }
 
 }

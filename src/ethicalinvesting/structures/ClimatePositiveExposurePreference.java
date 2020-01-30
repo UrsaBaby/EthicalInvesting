@@ -9,7 +9,7 @@ package ethicalinvesting.structures;
  *
  * @author Peter
  */
-public class ClimatePositivePreference {
+public class ClimatePositiveExposurePreference {
     private String climatePositiveExpoureName;
     private float climatePositiveExposureValue;
     
