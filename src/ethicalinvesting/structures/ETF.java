@@ -150,6 +150,30 @@ public class ETF {
         return new ClimatePositiveExposure();
     }
     
-    //TODO boolean isContainingCPEWithTHisName(String name)
+    boolean isContainingCPEWithTHisName(String name){
+        for(ClimatePositiveExposure checker : this.getCPEList()){
+            if(checker.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public ArrayList<ClimatePositiveExposure> getCPEList(){
+        return this.thisClimatePositiveExposures;
+    }
+    
+    public ArrayList<QuestionableIndustryExposure> getQIEList(){
+        return this.thisQuestionableIndustriesExposures;
+    }
+    
+    public boolean isContainingQIEWithThisName(String name){
+        for(QuestionableIndustryExposure checker : this.getQIEList()){
+            if(checker.getIndustryExposureName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
