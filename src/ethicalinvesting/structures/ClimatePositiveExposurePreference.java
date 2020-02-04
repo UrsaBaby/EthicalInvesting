@@ -13,15 +13,15 @@ public class ClimatePositiveExposurePreference {
     private String climatePositiveExpoureName;
     private float climatePositiveExposureValue;
     
-    public void setClimatePositiveExposureName(String exposureName){
+    public void setClimatePositiveExposurePreferenceName(String exposureName){
         this.climatePositiveExpoureName = exposureName;
     }
     
-    public void setClimatePositiveExposureValue(float exposureValue){
+    public void setClimatePositiveExposurePreferenceValue(float exposureValue){
         this.climatePositiveExposureValue = exposureValue;
     }
     
-    public String getClmatePositiveExposureName(){
+    public String getClimatePositiveExposurePreferenceName(){
         return this.climatePositiveExpoureName;
     }
     
@@ -30,7 +30,7 @@ public class ClimatePositiveExposurePreference {
     }
     
     public String toString(){
-        return this.getClmatePositiveExposureName() + " " + this.getClimatePositiveExposureValue() + "%";
+        return this.getClimatePositiveExposurePreferenceName() + " " + this.getClimatePositiveExposureValue() + "%";
     }
     
     

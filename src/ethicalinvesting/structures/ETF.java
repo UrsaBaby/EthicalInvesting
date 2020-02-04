@@ -23,16 +23,11 @@ public class ETF {
     private float sustainabilityScore;
     private String industry;
     private String type;
-    private ImportDataReader importDataReader;
 
     public ETF() {
-        importDataReader = new ImportDataReader();
+        
         thisQuestionableIndustriesExposures = new ArrayList<QuestionableIndustryExposure>();
         thisClimatePositiveExposures = new ArrayList<ClimatePositiveExposure>();
-      //  addClimatePostiveExposuresToThisListWithTheseNames(thisClimatePositiveExposures, importDataReader.getClimatePositiveExposureForETF());
-    //    addQuestionableIndustryExposureToThisListWithTheseNames(thisQuestionableIndustriesExposures, importDataReader.getClimateQuestionableIndustriesNames()); Should not be here
-       // setClimatePositiveExposureOnThisList(thisClimatePositiveExposures);
-    //    setQuestionableIndustryExposureOnThisList(thisQuestionableIndustriesExposures); Should not be here
     }
 
     public void setSustainabilityScore(float score) {
@@ -41,34 +36,6 @@ public class ETF {
 
     public void setIndustry(String industry) {
         this.industry = industry;
-    }
-
-    private void addClimatePostiveExposuresToThisListWithTheseNames(ArrayList<ClimatePositiveExposure> listOfClimatePositiveExposures, ArrayList<String> listOfClimatePositiveExposuresNames) {
-        for (String checker : listOfClimatePositiveExposuresNames) {
-            ClimatePositiveExposure addClimate = new ClimatePositiveExposure();
-            addClimate.setExposureName(checker);
-            listOfClimatePositiveExposures.add(addClimate);
-        }
-    }
-
-    private void addQuestionableIndustryExposureToThisListWithTheseNames(ArrayList<QuestionableIndustryExposure> listOfIndustryQuestionableIndustryExposures, ArrayList<String> listOfQuestionableIndustriesNames) {
-        for (String checker : listOfQuestionableIndustriesNames) {
-            QuestionableIndustryExposure addIndustry = new QuestionableIndustryExposure();
-            addIndustry.setIndustryName(checker);
-            listOfIndustryQuestionableIndustryExposures.add(addIndustry);
-        }
-    }
-
-    private void setClimatePositiveExposureOnThisList(ArrayList<ClimatePositiveExposure> thisList) {
-        for (ClimatePositiveExposure checker : thisList) {
-            checker.setExposure(importDataReader.getClimatePositiveExposureForExposureWithThisNameForETFWithThisName(checker.getName(), this.getName()));
-        }
-    }
-
-    private void setQuestionableIndustryExposureOnThisList(ArrayList<QuestionableIndustryExposure> thisList) {
-        for (QuestionableIndustryExposure checker : thisList) {
-            checker.setExposure(importDataReader.getQuestionableIndustryExposureForExposureWithThisNameForETFWithThisName(checker.getIndustryExposureName(), this.getName()));
-        }
     }
 
     public void setName(String name) {
@@ -112,64 +79,61 @@ public class ETF {
         return returnString;
     }
 
-    public QuestionableIndustryExposure getQuestionableIndustryExposureForThisETFWithThisName(String IndustryExposureName) {
-      
-            for (QuestionableIndustryExposure checker : thisQuestionableIndustriesExposures) {
-                if (checker.getIndustryExposureName().equals(IndustryExposureName)) {
-                    return checker;
-                }
-            }
-        System.out.println("Error in ETF getQuestionableIndustryExposureForThisETFWithThisName");
-    return new QuestionableIndustryExposure();
+    public QuestionableIndustryExposure getQuestionableIndustryExposureWithThisName(String IndustryExposureName) {
 
-    }
-    
-    public void addQuestionableIndustryExposure(QuestionableIndustryExposure thisQuestionableIndustry){
-        thisQuestionableIndustriesExposures.add(thisQuestionableIndustry);
-    }
-    
-    public void setQuestionableIndustryWithThisNameToThisExposureValue(String questionableIndustryExposureName, float value){
-        for(QuestionableIndustryExposure checker : thisQuestionableIndustriesExposures){
-            if(checker.getIndustryExposureName().equals(questionableIndustryExposureName)){
-                checker.setExposure(value);
+        for (QuestionableIndustryExposure checker : thisQuestionableIndustriesExposures) {
+            if (checker.getIndustryExposureName().equals(IndustryExposureName)) {
+                return checker;
             }
         }
+        System.out.println("Error in ETF getQuestionableIndustryExposureForThisETFWithThisName");
+        return new QuestionableIndustryExposure();
+
     }
-    
-    public void addClimatePositiveExposure(ClimatePositiveExposure thisClimatePositiveExposure){
-        thisClimatePositiveExposures.add(thisClimatePositiveExposure);
+
+    public void addQuestionableIndustryExposure(QuestionableIndustryExposure thisQuestionableIndustry) {
+        if (!this.isContainingQIEWithThisName(thisQuestionableIndustry.getIndustryExposureName())) {
+            thisQuestionableIndustriesExposures.add(thisQuestionableIndustry);
+        }
+
     }
-    
-    public ClimatePositiveExposure getClimatePositiveExposureWithThisName(String climatePositiveExposureName){
-        for(ClimatePositiveExposure checker : thisClimatePositiveExposures){
-            if(checker.getName().equals(climatePositiveExposureName)){
+
+    public void addClimatePositiveExposure(ClimatePositiveExposure thisClimatePositiveExposure) {
+        if (!this.isContainingCPEWithTHisName(thisClimatePositiveExposure.getName())) {
+            thisClimatePositiveExposures.add(thisClimatePositiveExposure);
+        }
+    }
+
+    public ClimatePositiveExposure getClimatePositiveExposureWithThisName(String climatePositiveExposureName) {
+        for (ClimatePositiveExposure checker : thisClimatePositiveExposures) {
+            if (checker.getName().equals(climatePositiveExposureName)) {
                 return checker;
             }
         }
         System.out.println("Error in ETF getClimatePositiveExposureWithThisName, climate positive exposure not found");
         return new ClimatePositiveExposure();
     }
-    
-    boolean isContainingCPEWithTHisName(String name){
-        for(ClimatePositiveExposure checker : this.getCPEList()){
-            if(checker.getName().equals(name)){
+
+    public boolean isContainingCPEWithTHisName(String name) {
+        for (ClimatePositiveExposure checker : this.getCPEList()) {
+            if (checker.getName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
-    
-    public ArrayList<ClimatePositiveExposure> getCPEList(){
+
+    public ArrayList<ClimatePositiveExposure> getCPEList() {
         return this.thisClimatePositiveExposures;
     }
-    
-    public ArrayList<QuestionableIndustryExposure> getQIEList(){
+
+    public ArrayList<QuestionableIndustryExposure> getQIEList() {
         return this.thisQuestionableIndustriesExposures;
     }
-    
-    public boolean isContainingQIEWithThisName(String name){
-        for(QuestionableIndustryExposure checker : this.getQIEList()){
-            if(checker.getIndustryExposureName().equals(name)){
+
+    public boolean isContainingQIEWithThisName(String name) {
+        for (QuestionableIndustryExposure checker : this.getQIEList()) {
+            if (checker.getIndustryExposureName().equals(name)) {
                 return true;
             }
         }

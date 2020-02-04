@@ -10,7 +10,7 @@ import ethicalinvesting.structures.ClimatePositiveExposurePreference;
 import ethicalinvesting.structures.ETF;
 import ethicalinvesting.structures.Person;
 import ethicalinvesting.structures.QuestionableIndustryExposure;
-import ethicalinvesting.structures.QuestionableIndustryPreference;
+import ethicalinvesting.structures.QuestionableIndustryExposurePreference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,58 +20,51 @@ import java.util.HashMap;
  */
 public class Calculations {
 
-    private float ETFssustainablityScore = 0;
-    private ArrayList<QuestionableIndustryExposure> ETFsQIE;
-    private ArrayList<QuestionableIndustryPreference> personsQIEPreferences;
-    private ArrayList<QuestionableIndustryExposure> eTFsQIECorrespondingToPersonsPreferences;
-
+  
+   
     public Calculations() {
 
     }
 
     public float getScore(ETF thisETF, Person thisPerson) {
-        float score = 0;
-        float eTFsSustainabilityScore = thisETF.getSustainabilityScore();
-        personsQIEPreferences = getPersonsQIEPreferencesWithAValueOverZero(thisPerson.getQuestionableIndustryPreferences());
-        eTFsQIECorrespondingToPersonsPreferences = getETFsQIEForPersonsQIEPreferences(thisETF, personsQIEPreferences);
+        float returnScore = 0;
 
-        return score;
+        //  eTFsQIECorrespondingToPersonsPreferences = getETFsQIEForPersonsQIEPreferences(thisETF, personsQIEPreferences);
+        // personsQIEPreferences = getPersonsQIEPreferencesWithAValueOverZero(thisPerson.getQuestionableIndustryPreferences());
+        float eTFsSustainabilityScore = thisETF.getSustainabilityScore();
+      //  System.out.println(eTFsSustainabilityScore);
+        float QIEScore = getQIEScoreForThisPersonForThisETF(thisPerson, thisETF);
+       // System.out.println(QIEScore);
+        float CPEScore = getCPEScoreForThisPersonForThisETF(thisPerson, thisETF);
+        //System.out.println(CPEScore);
+        returnScore = eTFsSustainabilityScore * QIEScore * CPEScore;
+
+        return returnScore;
     }
 
-    private ArrayList<QuestionableIndustryPreference> getPersonsQIEPreferencesWithAValueOverZero(ArrayList<QuestionableIndustryPreference> personsQIEPreferences) {
-        ArrayList<QuestionableIndustryPreference> returnList = new ArrayList<QuestionableIndustryPreference>();
-        for (QuestionableIndustryPreference checker : personsQIEPreferences) {
-            if (checker.getPreferenceValue() > 0) {
-                returnList.add(checker);
+    private float getCPEScoreForThisPersonForThisETF(Person thisPerson, ETF thisETF) { //TODO might have to be adjusted.
+        float returnfloat = 0;
+        for (ClimatePositiveExposure checker : thisETF.getCPEList()) {
+
+            if (thisPerson.isContatiningACPEPreferenceWithThisName(checker.getName())) {
+                float addFloat = checker.getExposure() * thisPerson.getClimatePositivePreferenceWithThisName(checker.getName()).getClimatePositiveExposureValue();
+                returnfloat += addFloat;
             }
         }
-        return returnList;
+        return returnfloat;
     }
-    
-    private ArrayList<QuestionableIndustryExposure> getETFsQIEForPersonsQIEPreferences(ETF thisETF, ArrayList<QuestionableIndustryPreference> thisPersonsQIEPreferences){
-      ArrayList<QuestionableIndustryExposure> returnList = new ArrayList<QuestionableIndustryExposure>();
-      for(QuestionableIndustryPreference checker : thisPersonsQIEPreferences){
-          returnList.add(thisETF.getQuestionableIndustryExposureForThisETFWithThisName(checker.getIndustryName()));
-      }
-      return returnList;
-    }
-    
-    private ArrayList<ClimatePositiveExposurePreference> getPersonsCPEPreferencesWithValuoOverZero (Person thisPersons){
-        ArrayList<ClimatePositiveExposurePreference> returnList = new ArrayList<ClimatePositiveExposurePreference>();
-        for(ClimatePositiveExposurePreference checker : thisPersons.getClimatePositivePreferences()){
-          if(checker.getClimatePositiveExposureValue() > 0){
-              returnList.add(checker);
-          } 
-        }
-        return returnList;
-    }
-    
-    private ArrayList<ClimatePositiveExposure> getETFsCPEByAListOfPersonsCPEPreferences(ETF thisETF, ArrayList<ClimatePositiveExposurePreference> thisPreferences){
-        ArrayList<ClimatePositiveExposure> returnList = new ArrayList<ClimatePositiveExposure>();
-        for(ClimatePositiveExposurePreference checker : thisPreferences){
-            thisETF.ge
-        }
-    }
-           
-}
 
+    private float getQIEScoreForThisPersonForThisETF(Person thisPerson, ETF thisETF) { //not tested
+        float retunFloat = 0;
+        float addFloat = 100;
+        for (QuestionableIndustryExposurePreference checker : thisPerson.getQuestionableIndustryExposurePreferences()) {
+            
+            if (thisETF.isContainingQIEWithThisName(checker.getIndustryName())) {
+                addFloat -= thisETF.getQuestionableIndustryExposureWithThisName(checker.getIndustryName()).getExposureValue() * checker.getPreferenceValue();
+            }
+            retunFloat += addFloat;
+        }
+        return retunFloat / 100;
+    }
+
+}

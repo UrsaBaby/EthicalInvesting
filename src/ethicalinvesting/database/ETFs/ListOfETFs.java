@@ -35,10 +35,12 @@ public class ListOfETFs {
       return null; 
     }
     
-    public boolean isETFInList(ETF thisETF){
-        if(listOfETFs.contains(thisETF)){
-            return  true;
-        }
-        return false;
+    public boolean isETFInListByName(String name){
+      for(ETF checker : this.listOfETFs){
+          if(checker.getName().equals(name)){
+              return true;
+          }
+      }
+      return false;
     }
 }

@@ -9,7 +9,7 @@ package ethicalinvesting.structures;
  *
  * @author Peter
  */
-public class QuestionableIndustryPreference {
+public class QuestionableIndustryExposurePreference {
     private float preferenceValue;
     private String industry;
     
